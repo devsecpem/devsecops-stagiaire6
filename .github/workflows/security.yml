@@ -21,3 +21,12 @@ jobs:
       - name: Run Composer Audit
         run: composer audit --locked
 
+  sast:
+    name: Semgrep - SAST
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep
+        run: semgrep scan --config auto --error .
