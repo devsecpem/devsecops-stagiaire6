@@ -1,4 +1,4 @@
-name: Security Pipeline
+==name: Security Pipeline
 
 
 on:
@@ -38,9 +38,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run Gitleaks
         run: |
-        docker run --rm -v ${{ github.workspace }}:/repo \
-          zricethezav/gitleaks:v8.30.0 \
-          detect --source="/repo" --no-git --verbose --exit-code=1
+          docker run --rm -v ${{ github.workspace }}:/repo \
+            zricethezav/gitleaks:v8.30.0 \
+            detect --source="/repo" --no-git --verbose --exit-code=1
 
 
   docker-config:
