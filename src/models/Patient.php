@@ -12,9 +12,11 @@ class Patient {
     public function search() {
         global $conn;
         $searchTerm = $_GET['q'];
-        $query = "SELECT * FROM patients WHERE name LIKE '%" . $searchTerm . "%'";
-        $result = mysqli_query($conn, $query);
-        return $result;
+	$stmt = $conn->prepare("SELECT * FROM patients WHERE name LIKE ?");
+	$param = "%" . $searchTerm . "%";
+	$stmt->bind_param("s", $param);
+	$stmt->execute();
+	$result = $stmt->get_result();
     }
 
     /**
@@ -23,7 +25,9 @@ class Patient {
     public function findById() {
         global $conn;
         $patientId = $_GET['id'];
-        $query = "SELECT * FROM patients WHERE id = '" . $patientId . "'";
-        return mysqli_query($conn, $query);
+	$stmt = $conn->prepare("SELECT * FROM patients WHERE id = ?");
+	$stmt->bind_param("s", $patientId);
+	$stmt->execute();
+	return $stmt->get_result();
     }
 }
